@@ -1,0 +1,11 @@
+Hello <%= @author_name %>,
+
+You have received new feedback on your blog post "<%= @blog_post.title %>".
+
+Feedback Details:
+From: <%= @feedback.name %> (<%= @feedback.email %>)
+
+Message:
+<%= @feedback.message %>
+
+Thank you for using Blog Spot!
