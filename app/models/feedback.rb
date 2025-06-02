@@ -13,9 +13,9 @@ class Feedback < ApplicationRecord
   def send_feedback_email
     begin
       FeedbackMailer.send_feedback(self).deliver_now
-      Rails.logger.info "Feedback email sent successfully for feedback ##{id}"
+      Rails.logger.info "Feedback email sent successfully for feedback ##{id}" if Rails.env.development?
     rescue => e
-      Rails.logger.error "Failed to send feedback email: #{e.message}"
+      Rails.logger.error "Failed to send feedback email: #{e.message}" if Rails.env.development?
     end
   end
 
