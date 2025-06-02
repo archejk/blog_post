@@ -1,0 +1,19 @@
+{
+  "name": "blog_spot",
+  "private": true,
+  "dependencies": {
+    "@hotwired/stimulus": "^3.0.0",
+    "@hotwired/turbo-rails": "^7.0.0"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.0",
+    "@tailwindcss/forms": "^0.5.0",
+    "@tailwindcss/typography": "^0.5.0",
+    "@tailwindcss/aspect-ratio": "^0.4.0"
+  },
+  "scripts": {
+    "build": "tailwindcss -i ./app/assets/stylesheets/application.tailwind.css -o ./app/assets/builds/application.css",
+    "build:css": "tailwindcss -i ./app/assets/stylesheets/application.tailwind.css -o ./app/assets/builds/application.css --watch",
+    "build:css:prod": "tailwindcss -i ./app/assets/stylesheets/application.tailwind.css -o ./app/assets/builds/application.css --minify"
+  }
+}
