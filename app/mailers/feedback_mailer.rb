@@ -1,5 +1,5 @@
 class FeedbackMailer < ApplicationMailer
-  default from: "noreply@blogspot.com"
+  default from: "archejewelkim@gmail.com"
 
   def send_feedback(feedback)
     @feedback = feedback

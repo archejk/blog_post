@@ -71,3 +71,6 @@ end
 gem "dotenv-rails", groups: [ :development, :test ]
 gem "image_processing", "~> 1.2"
 gem "kaminari"
+
+# Sendgrid for email delivery
+gem "sendgrid-ruby"
