@@ -2,7 +2,7 @@ class Feedback < ApplicationRecord
   belongs_to :blog_post
   belongs_to :user
 
-  validates :message, presence: true, length: { minimum: 5 }
+  validates :message, presence: true
 
   after_create :send_feedback_email
 

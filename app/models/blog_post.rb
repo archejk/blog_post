@@ -2,8 +2,8 @@ class BlogPost < ApplicationRecord
   belongs_to :author, class_name: "User"
   has_many :feedbacks, dependent: :destroy
 
-  validates :title, presence: true, length: { minimum: 5 }
-  validates :content, presence: true, length: { minimum: 10 }
+  validates :title, presence: true
+  validates :content, presence: true
 
   scope :recent, -> { order(created_at: :desc) }
 
