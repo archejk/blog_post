@@ -74,3 +74,6 @@ gem "kaminari"
 
 # Sendgrid for email delivery
 gem "sendgrid-ruby"
+
+# Authentication
+gem "devise"
