@@ -11,7 +11,7 @@
             <%= link_to blog_post.title, blog_post, class: "hover:text-blue-600 transition-colors" %>
           </h2>
           <p class="text-sm text-gray-600">
-            By <%= blog_post.author_name %> • <%= blog_post.created_at.strftime("%B %d, %Y") %>
+            By <%= blog_post.author_name %> (<%= blog_post.author.email %>) • <%= blog_post.created_at.strftime("%B %d, %Y") %>
           </p>
         </div>
         
