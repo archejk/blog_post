@@ -14,6 +14,15 @@
             By <%= blog_post.author_name %> • <%= blog_post.created_at.strftime("%B %d, %Y") %>
           </p>
         </div>
+        
+        <% if user_signed_in? && owner_of_post?(blog_post) %>
+          <div class="flex space-x-2">
+            <%= link_to "Edit", edit_blog_post_path(blog_post), class: "text-sm text-blue-600 hover:text-blue-800" %>
+            <%= link_to "Delete", blog_post, method: :delete, 
+                confirm: "Are you sure?", 
+                class: "text-sm text-red-600 hover:text-red-800" %>
+          </div>
+        <% end %>
       </div>
       
       <div class="text-gray-700 mb-4">
@@ -33,7 +42,17 @@
 <% if @blog_posts.empty? %>
   <div class="text-center py-12">
     <h3 class="text-xl font-medium text-gray-900 mb-2">No blog posts yet</h3>
-    <p class="text-gray-600 mb-4">Be the first to create a blog post!</p>
-    <%= link_to "Create First Post", new_blog_post_path, class: "bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors" %>
+    <p class="text-gray-600 mb-4">
+      <% if user_signed_in? %>
+        Be the first to create a blog post!
+      <% else %>
+        Sign in to create your first blog post!
+      <% end %>
+    </p>
+    <% if user_signed_in? %>
+      <%= link_to "Create First Post", new_blog_post_path, class: "bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors" %>
+    <% else %>
+      <%= link_to "Sign Up", new_user_registration_path, class: "bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors" %>
+    <% end %>
   </div>
 <% end %>

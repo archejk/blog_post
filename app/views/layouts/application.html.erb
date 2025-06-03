@@ -13,9 +13,20 @@
   <body class="bg-gray-50 min-h-screen">
     <nav class="bg-white shadow-sm border-b">
       <div class="max-w-6xl mx-auto px-4 py-4">
-        <%= link_to "Blog Post", root_path, class: "text-2xl font-bold text-blue-600 hover:text-blue-800" %>
-        <div class="float-right">
-          <%= link_to "New Post", new_blog_post_path, class: "bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors" %>
+        <div class="flex justify-between items-center">
+          <%= link_to "Blog Post", root_path, class: "text-2xl font-bold text-blue-600 hover:text-blue-800" %>
+          
+          <div class="flex items-center space-x-4">
+            <% if user_signed_in? %>
+              <span class="text-gray-600">Hello, <%= current_user.display_name %>!</span>
+              <%= link_to "New Post", new_blog_post_path, class: "bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors" %>
+              <%#= link_to "Sign Out", destroy_user_session_path, method: :delete, class: "text-gray-600 hover:text-gray-800" %>
+              <%= link_to "Sign Out", destroy_user_session_path, data: { turbo_method: :delete }, class: "text-gray-600 hover:text-gray-800" %>
+            <% else %>
+              <%= link_to "Sign In", new_user_session_path, class: "text-blue-600 hover:text-blue-800" %>
+              <%= link_to "Sign Up", new_user_registration_path, class: "bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors" %>
+            <% end %>
+          </div>
         </div>
       </div>
     </nav>

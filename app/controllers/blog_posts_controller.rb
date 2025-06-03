@@ -17,6 +17,7 @@ class BlogPostsController < ApplicationController
 
   def create
     @blog_post = BlogPost.new(blog_post_params)
+    @blog_post.author = current_user
 
     if @blog_post.save
       redirect_to @blog_post, notice: "Blog post was successfully created."
@@ -48,6 +49,6 @@ class BlogPostsController < ApplicationController
   end
 
   def blog_post_params
-    params.require(:blog_post).permit(:title, :content, :author_name, :author_email)
+    params.require(:blog_post).permit(:title, :content)
   end
 end

@@ -4,6 +4,9 @@ class FeedbacksController < ApplicationController
   def create
     puts "CHECKPOINT 1" if Rails.env.development?
     @feedback = @blog_post.feedbacks.build(feedback_params)
+    @feedback.user = current_user
+    @feedback.name = current_user.name
+    @feedback.email = current_user.email
 
     if @feedback.save
       puts "CHECKPOINT 2" if Rails.env.development?
@@ -24,6 +27,6 @@ class FeedbacksController < ApplicationController
   end
 
   def feedback_params
-    params.require(:feedback).permit(:name, :email, :message, :blog_post_id)
+    params.require(:feedback).permit(:message)
   end
 end

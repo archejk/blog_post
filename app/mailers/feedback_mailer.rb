@@ -4,10 +4,10 @@ class FeedbackMailer < ApplicationMailer
   def send_feedback(feedback)
     @feedback = feedback
     @blog_post = feedback.blog_post
-    @author_name = @blog_post.author_name
+    @author_name = @blog_post.author.name
 
     mail(
-      to: @blog_post.author_email,
+      to: @blog_post.author.email,
       subject: "New feedback on your blog post: #{@blog_post.title}"
     )
   end

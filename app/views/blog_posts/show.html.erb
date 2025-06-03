@@ -3,12 +3,14 @@
     <h1 class="text-3xl font-bold text-gray-900 mb-4"><%= @blog_post.title %></h1>
     <div class="flex justify-between items-center text-sm text-gray-600">
       <p>By <%= @blog_post.author_name %> • <%= @blog_post.created_at.strftime("%B %d, %Y at %I:%M %p") %></p>
-      <div class="space-x-2">
-        <%= link_to "Edit", edit_blog_post_path(@blog_post), class: "text-blue-600 hover:text-blue-800" %>
-        <%= link_to "Delete", @blog_post, method: :delete, 
-            confirm: "Are you sure?", 
-            class: "text-red-600 hover:text-red-800" %>
-      </div>
+      <% if user_signed_in? && owner_of_post?(@blog_post) %>
+        <div class="space-x-2">
+          <%= link_to "Edit", edit_blog_post_path(@blog_post), class: "text-blue-600 hover:text-blue-800" %>
+          <%= link_to "Delete", @blog_post, method: :delete, 
+              confirm: "Are you sure?", 
+              class: "text-red-600 hover:text-red-800" %>
+        </div>
+      <% end %>
     </div>
   </header>
 
@@ -17,50 +19,73 @@
   </div>
 </article>
 
-<!-- Feedback Section -->
-<section class="bg-white rounded-lg shadow-md p-8" data-controller="feedback-form">
-  <h2 class="text-2xl font-semibold text-gray-900 mb-6">Leave Feedback</h2>
+<!-- feedback lists -->
+<% if @blog_post.feedbacks.any? %>
+  <section class="bg-white rounded-lg shadow-md p-8 mb-8">
+    <h2 class="text-2xl font-semibold text-gray-900 mb-6">Feedback (<%= @blog_post.feedbacks.count %>)</h2>
+    
+    <div class="space-y-4">
+      <% @blog_post.feedbacks.includes(:user).order(created_at: :desc).each do |feedback| %>
+        <div class="border-l-4 border-blue-500 pl-4 py-2">
+          <div class="flex justify-between items-start mb-2">
+            <strong class="text-gray-900"><%= feedback.name %></strong>
+            <span class="text-sm text-gray-500"><%= feedback.created_at.strftime("%B %d, %Y at %I:%M %p") %></span>
+          </div>
+          <p class="text-gray-700"><%= simple_format(feedback.message) %></p>
+        </div>
+      <% end %>
+    </div>
+  </section>
+<% end %>
 
-  <%= form_with model: [@blog_post, Feedback.new], data: { controller: "feedback-form", action: "submit->feedback-form#submit" } do |form| %>
-    <%= hidden_field_tag :debug_mode, "true" %>
-    <% if @feedback.errors.any? %>
-      <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-        <ul class="list-disc list-inside">
-          <% @feedback.errors.full_messages.each do |message| %>
-            <li><%= message %></li>
-          <% end %>
-        </ul>
+<!-- sending feedback form -->
+<% if user_signed_in? %>
+  <% if !owner_of_post?(@blog_post) %>
+    <section class="bg-white rounded-lg shadow-md p-8" data-controller="feedback-form">
+      <h2 class="text-2xl font-semibold text-gray-900 mb-6">Leave Feedback</h2>
+
+      <%= form_with model: [@blog_post, Feedback.new], data: { controller: "feedback-form", action: "submit->feedback-form#submit" }, class: "space-y-4" do |form| %>
+        <div>
+          <%= form.label :message, class: "block text-sm font-medium text-gray-700 mb-1" %>
+          <%= form.text_area :message, rows: 4, class: "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent", placeholder: "Share your thoughts about this blog post..." %>
+        </div>
+
+        <div>
+          <%= form.submit "Send Feedback", class: "bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors cursor-pointer" %>
+        </div>
+      <% end %>
+    </section>
+  <% else %>
+    <section class="bg-white rounded-lg shadow-md p-8" data-controller="feedback-form">
+      <h2 class="text-2xl font-semibold text-gray-900 mb-6">Leave Feedback</h2>
+      <%= form_with model: [@blog_post, Feedback.new], data: { controller: "feedback-form", action: "submit->feedback-form#submit" }, class: "space-y-4" do |form| %>
+        <div>
+          <%= form.label :message, class: "block text-sm font-medium text-gray-700 mb-1" %>
+          <%= form.text_area :message,
+                rows: 4,
+                placeholder: "Share your thoughts about this blog post...",
+                disabled: owner_of_post?(@blog_post),
+                class: "w-full px-3 py-2 border rounded-md focus:outline-none #{owner_of_post?(@blog_post) ? 'bg-gray-100 text-gray-500 border-gray-200 cursor-not-allowed' : 'border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent'}" %>
+        </div>
+
+        <div>
+          <%= form.submit "Send Feedback", disabled: owner_of_post?(@blog_post), class: "px-6 py-2 rounded-lg transition-colors #{owner_of_post?(@blog_post) ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-blue-600 text-white hover:bg-blue-700 cursor-pointer'}" %>
+        </div>
+      <% end %>
+    </section>
+
+    <% if owner_of_post?(@blog_post) %>
+      <div class="bg-gray-100 rounded-lg p-8 text-center mt-4">
+        <p class="text-gray-600">You cannot leave feedback on your own blog post.</p>
       </div>
     <% end %>
-
-    <div class="grid md:grid-cols-2 gap-4">
-      <div>
-        <%= form.label :name, class: "block text-sm font-medium text-gray-700 mb-1" %>
-        <%= form.text_field :name, 
-            required: true,
-            class: "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" %>
-      </div>
-      
-      <div>
-        <%= form.label :email, class: "block text-sm font-medium text-gray-700 mb-1" %>
-        <%= form.email_field :email, 
-            required: true,
-            class: "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" %>
-      </div>
-    </div>
-    
-    <div>
-      <%= form.label :message, class: "block text-sm font-medium text-gray-700 mb-1" %>
-      <%= form.text_area :message, rows: 4,
-          required: true,
-          class: "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" %>
-    </div>
-    
-    <div>
-      <%= form.submit "Send Feedback", class: "bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors cursor-pointer" %>
-    </div>
   <% end %>
-</section>
+<% else %>
+  <div class="bg-gray-100 rounded-lg p-8 text-center">
+    <p class="text-gray-600 mb-4">Please sign in to leave feedback.</p>
+    <%= link_to "Sign In", new_user_session_path, class: "bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors" %>
+  </div>
+<% end %>
 
 <div class="mt-6">
   <%= link_to "← Back to All Posts", root_path, class: "text-blue-600 hover:text-blue-800" %>

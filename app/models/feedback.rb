@@ -1,12 +1,19 @@
 class Feedback < ApplicationRecord
   belongs_to :blog_post
+  belongs_to :user
 
-  validates :name, presence: true
-  validates :email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :message, presence: true, length: { minimum: 5 }
   validate :author_cannot_submit_feedback_on_own_post
 
   after_create :send_feedback_email
+
+  # def name
+  #   user.display_name
+  # end
+
+  # def email
+  #   user.email
+  # end
 
   private
 
