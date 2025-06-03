@@ -1,8 +1,7 @@
 FactoryBot.define do
   factory :blog_post do
-    title { "MyString" }
-    content { "MyText" }
-    author_name { "MyString" }
-    author_email { "MyString" }
+    title { "Sample Blog Post" }
+    content { "Haluuu, this is a sample content" }
+    association :author, factory: :user
   end
 end

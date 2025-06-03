@@ -1,8 +1,7 @@
 FactoryBot.define do
   factory :feedback do
-    name { "MyString" }
-    email { "MyString" }
-    message { "MyText" }
-    blog_post { nil }
+    message { "Niceee!!! :))" }
+    association :user
+    association :blog_post
   end
 end
