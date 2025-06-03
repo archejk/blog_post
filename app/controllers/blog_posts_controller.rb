@@ -6,9 +6,7 @@ class BlogPostsController < ApplicationController
   end
 
   def show
-    # @feedback = @blog_post.feedbacks.build
     @feedback = Feedback.new
-    Rails.logger.info "Showing blog post: #{@blog_post.title} by #{@blog_post.author_email}" if Rails.env.development?
   end
 
   def new
