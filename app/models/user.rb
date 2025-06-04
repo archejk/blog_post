@@ -6,6 +6,7 @@ class User < ApplicationRecord
 
   has_many :blog_posts, foreign_key: "author_id", dependent: :destroy
   has_many :feedbacks, dependent: :destroy
+  has_one_attached :avatar
 
   validates :name, presence: true
 
