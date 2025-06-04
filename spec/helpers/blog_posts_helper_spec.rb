@@ -1,15 +1,29 @@
 require 'rails_helper'
 
-# Specs in this file have access to a helper object that includes
-# the BlogPostsHelper. For example:
-#
-# describe BlogPostsHelper do
-#   describe "string concat" do
-#     it "concats two strings with spaces" do
-#       expect(helper.concat_strings("this","that")).to eq("this that")
-#     end
-#   end
-# end
 RSpec.describe BlogPostsHelper, type: :helper do
-  pending "add some examples to (or delete) #{__FILE__}"
+  let(:user) { double('User') }
+  let(:author) { double('User') }
+
+  let(:blog_post) { double('BlogPost', author: author) }
+
+  before do
+    # Stub current_user helper method
+    allow(helper).to receive(:current_user).and_return(current_user)
+  end
+
+  context "when current_user is the author of the post" do
+    let(:current_user) { author }
+
+    it "returns true" do
+      expect(helper.owner_of_post?(blog_post)).to be true
+    end
+  end
+
+  context "when current_user is not the author of the post" do
+    let(:current_user) { user }
+
+    it "returns false" do
+      expect(helper.owner_of_post?(blog_post)).to be false
+    end
+  end
 end
