@@ -4,6 +4,7 @@ RSpec.describe User, type: :model do
   describe 'associations' do
     it { should have_many(:blog_posts).with_foreign_key('author_id').dependent(:destroy) }
     it { should have_many(:feedbacks).dependent(:destroy) }
+    it { should have_one_attached(:avatar) }
   end
 
   describe 'validations' do
