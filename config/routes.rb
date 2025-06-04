@@ -17,4 +17,6 @@ Rails.application.routes.draw do
   resources :blog_posts do
     resources :feedbacks, only: [ :create ]
   end
+
+  resource :user, only: [ :show, :edit, :update ]
 end

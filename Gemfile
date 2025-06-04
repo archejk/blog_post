@@ -68,7 +68,6 @@ group :test do
 end
 
 gem "dotenv-rails", groups: [ :development, :test ]
-gem "image_processing", "~> 1.2"
 gem "kaminari"
 
 # Sendgrid for email delivery
@@ -76,3 +75,7 @@ gem "sendgrid-ruby"
 
 # Authentication
 gem "devise"
+
+# Image Attachments
+gem "activestorage-validator"
+gem "image_processing"

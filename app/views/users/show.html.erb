@@ -1,0 +1,46 @@
+<div class="max-w-2xl mx-auto">
+  <div class="bg-white rounded-lg shadow-md overflow-hidden">
+    <div class="bg-gradient-to-r px-6 py-8">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center space-x-4">
+          <div class="relative">
+            <% if @user.avatar.attached? %>
+              <%= image_tag @user.avatar, class: "w-20 h-20 rounded-full object-cover" %>
+            <% else %>
+              <div class="w-20 h-20 rounded-full bg-gray-300 flex items-center justify-center">
+                <svg class="w-10 h-10 text-gray-600" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+                </svg>
+              </div>
+            <% end %>
+          </div>
+          <div class="text-black">
+            <h1 class="text-2xl font-bold"><%= @user.display_name %></h1>
+            <p class="text-black"><%= @user.email %></p>
+          </div>
+        </div>
+        <%= link_to "Edit Profile", edit_user_path, class: "text-blue-600 hover:text-blue-800 text-sm font-medium" %>
+      </div>
+    </div>
+    <div class="p-6">
+      <div class="space-y-6">
+        <% if @user.blog_posts.any? %>
+          <div class="border-t pt-6">
+            <h2 class="text-lg font-semibold text-gray-900 mb-4">Your Blog Posts</h2>
+            <div class="space-y-3">
+              <% @user.blog_posts.order(created_at: :desc).each do |post| %>
+                <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                  <div>
+                    <h3 class="font-medium text-gray-900"><%= post.title %></h3>
+                    <p class="text-sm text-gray-600"><%= time_ago_in_words(post.created_at) %> ago</p>
+                  </div>
+                  <%= link_to "View", blog_post_path(post), class: "text-blue-600 hover:text-blue-800 text-sm font-medium" %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
