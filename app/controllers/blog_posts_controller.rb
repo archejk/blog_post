@@ -68,6 +68,6 @@ class BlogPostsController < ApplicationController
   end
 
   def filter_params
-    params.permit(:author_id, :feedback_filter, :page)
+    params.permit(:author_id, :feedback_filter, :page, :commit)
   end
 end
