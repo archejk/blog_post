@@ -25,6 +25,7 @@ A simple blog application built with Ruby on Rails, featuring user authenticatio
 - **Blog Post Management** - CRUD function in blog posts
 - **Feedback System** - Users can leave feedback on blog posts except their own
 - **Email Notifications** - Authors receive email notifications when feedback is submitted (via SendGrid Service API)
+- **Filtering & Pagination** – Filter blog posts by author and feedback presence with Kaminari gem pagination
 - **Responsive Design** - Built with Tailwind CSS for a modern, mobile-friendly interface
 - **Testing** - Fully tested with passing RSpec specs
 
@@ -38,6 +39,7 @@ A simple blog application built with Ruby on Rails, featuring user authenticatio
 | Database      | PostgreSQL                                                      |
 | Authentication| [Devise](https://github.com/heartcombo/devise)                  |
 | Emails        | [SendGrid API](https://sendgrid.com/)                           |
+| Pagination    | [Kaminari Gem](https://github.com/kaminari/kaminari)                                                    |
 | Frontend      | [Tailwind CSS](https://tailwindcss.com), [Stimulus JS](https://stimulus.hotwired.dev) |
 | Testing       | [RSpec](https://rspec.info), [FactoryBot](https://github.com/thoughtbot/factory_bot_rails) |
 
@@ -87,9 +89,11 @@ DATABASE_USERNAME=your_username
 DATABASE_PASSWORD=your_password
 
 # Sendgrid email delivery service
-SENDGRID_API_KEY=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
+SENDGRID_API_KEY=your_sendgrid_api_key
 ```
-
+  - refer to the documentation on how to generate API key: https://www.twilio.com/docs/sendgrid/for-developers/sending-email/getting-started-smtp
+  - your_sendgrid_api_key or use this key from my test account:
+  ![image](https://github.com/user-attachments/assets/f6b312da-f540-4dfa-b5af-5f057193c3cc)
 ---
 
 ## Run Tests
@@ -101,6 +105,7 @@ bundle exec rspec
 bundle exec rspec spec/models
 bundle exec rspec spec/controllers
 bundle exec rspec spec/mailers
+bundle exec rspec spec/services
 bundle exec rspec spec/helpers
 bundle exec rspec spec/requests
 ```
@@ -127,6 +132,14 @@ yarn build:css
 
 ---
 
+ ## Demo
+
+https://github.com/user-attachments/assets/c7cca9c4-a34b-4c4a-bf95-f0f8e3ba1bfb
+
+[BlogPost filtering and pagination.webm](https://github.com/user-attachments/assets/55516ba5-8aa6-4ccd-9708-9a139cc15ed8)
+
+---
+
 ## Key Changes & Development Log
 - Initial Commit: Create and setup Blog Post with feedback mailer
   - [View Commit ›](https://github.com/archejk/blog_post/commit/6532a80ec87f800e7ccb1e36a201eb8c6ecee042)
@@ -142,9 +155,6 @@ yarn build:css
   - [View Commit ›](https://github.com/archejk/blog_post/commit/04a86044e020e3ea34d63766edb69a87d435a8c2)
 - Test: Set up Unit Test Framework
   - [View Commit ›](https://github.com/archejk/blog_post/commit/ba1282f132cea6d39583593e503d16b98635623c)
+- Feature: BlogPost Filtering & Pagination
+  - [View PR #7 ›](https://github.com/archejk/blog_post/pull/7)
 
- ---
-
- ## Demo
-
- https://github.com/user-attachments/assets/80239335-4802-406e-8fd8-90ec82997417
