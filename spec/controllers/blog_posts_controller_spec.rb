@@ -12,9 +12,15 @@ RSpec.describe BlogPostsController, type: :controller do
 
   describe "GET #index" do
     it "returns a success response" do
-      get :index
+      get :index, params: { page: 1 }
       expect(response).to be_successful
-      expect(assigns(:blog_posts)).to include(blog_post)
+
+      posts = assigns(:posts)
+      expect(posts).to be_present
+      expect(posts.map(&:id)).to include(blog_post.id)
+
+      expect(assigns(:filter_params)).not_to be_nil
+      expect(assigns(:authors)).to include([ user.id, user.name ])
     end
   end
 

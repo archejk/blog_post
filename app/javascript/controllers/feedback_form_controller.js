@@ -2,7 +2,7 @@ import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
   connect() {
-    console.log("Feedback form controller connected")
+    // console.log("Feedback form controller connected")
   }
 
   submit(event) {

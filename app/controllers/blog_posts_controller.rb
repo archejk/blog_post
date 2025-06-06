@@ -2,7 +2,24 @@ class BlogPostsController < ApplicationController
   before_action :set_blog_post, only: [ :show, :edit, :update, :destroy ]
 
   def index
-    @blog_posts = BlogPost.recent
+    @filter_params = filter_params
+    @authors = User.joins(:blog_posts).distinct.pluck(:id, :name)
+
+    # use the PostFilterService for filtering
+    filtered_posts = BlogPostFilterService.new(BlogPost.all)
+
+    # apply filters based on params
+    filtered_posts = filtered_posts.by_author(@filter_params[:author_id]) if @filter_params[:author_id].present?
+
+    case @filter_params[:feedback_filter]
+    when "with_feedback"
+      filtered_posts = filtered_posts.with_feedback
+    when "without_feedback"
+      filtered_posts = filtered_posts.without_feedback
+    end
+
+    # get results with pagination (using Kaminari gem)
+    @posts = filtered_posts.results.page(params[:page]).per(10)
   end
 
   def show
@@ -48,5 +65,9 @@ class BlogPostsController < ApplicationController
 
   def blog_post_params
     params.require(:blog_post).permit(:title, :content)
+  end
+
+  def filter_params
+    params.permit(:author_id, :feedback_filter, :page)
   end
 end
