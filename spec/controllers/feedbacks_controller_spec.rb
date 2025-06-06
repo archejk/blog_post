@@ -37,7 +37,7 @@ RSpec.describe FeedbacksController, type: :controller do
       let(:invalid_params) do
         {
           blog_post_id: blog_post.id,
-          feedback: { message: '' } # blank message, assuming validation
+          feedback: { message: '' }
         }
       end
 

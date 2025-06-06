@@ -32,7 +32,7 @@ RSpec.describe "BlogPosts", type: :request do
   describe "POST /create" do
     it "creates a blog post and returns redirect" do
       post blog_posts_path, params: { blog_post: { title: "New Post", content: "Some content" } }
-      expect(response).to have_http_status(:redirect) # usually redirects after create
+      expect(response).to have_http_status(:redirect)
       follow_redirect!
       expect(response.body).to include("New Post")
     end

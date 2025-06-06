@@ -5,10 +5,8 @@ class BlogPostsController < ApplicationController
     @filter_params = filter_params
     @authors = User.joins(:blog_posts).distinct.pluck(:id, :name)
 
-    # use the PostFilterService for filtering
     filtered_posts = BlogPostFilterService.new(BlogPost.recent)
 
-    # apply filters based on params
     filtered_posts = filtered_posts.by_author(@filter_params[:author_id]) if @filter_params[:author_id].present?
 
     case @filter_params[:feedback_filter]
@@ -18,7 +16,6 @@ class BlogPostsController < ApplicationController
       filtered_posts = filtered_posts.without_feedback
     end
 
-    # get results with pagination (using Kaminari gem)
     @posts = filtered_posts.results.page(params[:page]).per(10)
   end
 

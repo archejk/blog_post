@@ -7,7 +7,6 @@ RSpec.describe BlogPostsHelper, type: :helper do
   let(:blog_post) { double('BlogPost', author: author) }
 
   before do
-    # Stub current_user helper method
     allow(helper).to receive(:current_user).and_return(current_user)
   end
 
