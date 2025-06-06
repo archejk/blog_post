@@ -136,7 +136,7 @@ yarn build:css
   - [View PR #2 ›](https://github.com/archejk/blog_post/pull/2)
 - User Authentication: Integrated Devise for registration/login
   - [View PR #4 ›](https://github.com/archejk/blog_post/pull/4)
-- User Profiles: Avatar upload and profile management
+- User Profiles: Avatar upload with Active Storage and profile management
   - [View Commit ›](https://github.com/archejk/blog_post/commit/69518f94384549de2cadfc6416b1681e90f6a709)
 - Bug Fix: Ensure delete button sends correct DELETE request with Turbo
   - [View Commit ›](https://github.com/archejk/blog_post/commit/04a86044e020e3ea34d63766edb69a87d435a8c2)
