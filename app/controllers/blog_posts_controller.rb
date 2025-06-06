@@ -16,7 +16,7 @@ class BlogPostsController < ApplicationController
       filtered_posts = filtered_posts.without_feedback
     end
 
-    @posts = filtered_posts.results.page(params[:page]).per(10)
+    @posts = filtered_posts.results.includes(:feedbacks, :author).page(params[:page]).per(10)
   end
 
   def show
