@@ -10,8 +10,6 @@ class BlogPostsController < ApplicationController
 
     # apply filters based on params
     filtered_posts = filtered_posts.by_author(@filter_params[:author_id]) if @filter_params[:author_id].present?
-    puts "Filter params: #{@filter_params.inspect}"
-    puts "Filtered posts count: #{filtered_posts.results.count}"
 
     case @filter_params[:feedback_filter]
     when "with_feedback"

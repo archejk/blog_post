@@ -4,7 +4,7 @@ export default class extends Controller {
   static targets = ["searchInput", "dropdown", "hiddenField", "clearButton"]
 
   connect() {
-    console.log("Author search controller connected")
+    // console.log("Author search controller connected")
 
     this.originalOptions = Array.from(this.dropdownTarget.querySelectorAll("button[data-author-id]"))
     this.hideDropdown()
