@@ -21,6 +21,23 @@ RSpec.describe BlogPost, type: :model do
         expect(BlogPost.recent).to eq([ newest_post, new_post, old_post ])
       end
     end
+
+    describe '.with_feedback' do
+      let!(:post_with_feedback) { create(:blog_post) }
+
+      it 'returns posts with feedback' do
+        create(:feedback, blog_post: post_with_feedback)
+        expect(BlogPost.with_feedback).to eq([ post_with_feedback ])
+      end
+    end
+
+    describe '.without_feedback' do
+      let!(:post_without_feedback) { create(:blog_post) }
+
+      it 'returns posts without feedback' do
+        expect(BlogPost.without_feedback).to eq([ post_without_feedback ])
+      end
+    end
   end
 
   describe '#author_name' do
