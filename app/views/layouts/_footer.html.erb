@@ -1,0 +1,15 @@
+<footer class="bg-gray-100 border-t border-gray-300 mt-12 py-5">
+  <div class="max-w-6xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+    <p class="text-sm text-gray-500">
+      © <%= Time.current.year %> Blog Post. All rights reserved. | 
+      <%= link_to "JK Arche :)", "https://jkdevfolio.netlify.app/", target: "_blank", class: "text-gray-500 underline" %>
+    </p>
+
+    <nav class="flex flex-wrap justify-center gap-6 text-sm font-medium text-gray-600">
+      <%= link_to "About", "#", class: "hover:text-gray-900 transition-colors" %>
+      <%= link_to "Privacy Policy", "#", class: "hover:text-gray-900 transition-colors" %>
+      <%= link_to "Terms of Service", "#", class: "hover:text-gray-900 transition-colors" %>
+      <%= link_to "Contact", "#", class: "hover:text-gray-900 transition-colors" %>
+    </nav>
+  </div>
+</footer>
