@@ -62,6 +62,11 @@ A simple blog application built with Ruby on Rails, featuring user authenticatio
 git clone https://github.com/archejk/blog_post.git
 ```
 
+- Navigate into the project directory
+```
+cd blog_spot
+```
+
 ### 2. Install dependencies
 ```rb
 # install ruby gems
