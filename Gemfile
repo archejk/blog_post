@@ -41,7 +41,7 @@ group :development, :test do
   gem "debug", platforms: %i[ mri mswin mswin64 mingw x64_mingw ], require: "debug/prelude"
   gem "rspec-rails", "~> 6.0"
   gem "factory_bot_rails", "~> 6.2"
-  gem "shoulda-matchers", "~> 5.3"
+  gem "shoulda-matchers", "~> 6.5"
   gem "database_cleaner-active_record", "~> 2.1"
 
   # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
